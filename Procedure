@@ -1,0 +1,11 @@
+BEGIN
+	##CREATE TABLE estate_@DATE AS SELECT * FROM estate;
+	SET @createTable = CONCAT('create table estate_',DATE_FORMAT(CURDATE(),'%Y_%m_%d'),' AS SELECT * FROM estate');
+	PREPARE stmt1 FROM @createTable ;
+	EXECUTE stmt1 ;
+	##DELETE FROM estate_@DATE where id NOT IN(SELECT id FROM (SELECT id,MAX(scgpshsj) FROM estate_copy GROUP BY fwtybh) as tb);
+	SET @deleteItem = CONCAT('DELETE FROM estate_',DATE_FORMAT(CURDATE(),'%Y_%m_%d'),' where id NOT IN(SELECT id FROM (SELECT id,MAX(scgpshsj) FROM estate_',DATE_FORMAT(CURDATE(),'%Y_%m_%d'),' GROUP BY fwtybh) as tb)');
+	PREPARE stmt2 FROM @deleteItem ;
+	EXECUTE stmt2 ;
+	TRUNCATE TABLE estate;
+END
