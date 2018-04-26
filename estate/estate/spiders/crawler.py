@@ -16,7 +16,7 @@ class EstateSpider(Spider):
         totalPage = reobj_Page.findall(respList['pageinfo'])[1]
         print("totalPage : "+totalPage)
         for nextPage in range(1, int(totalPage)):
-            absolute_next_page_url =  'YourURL?page='+str(nextPage)'
+            absolute_next_page_url =  'YourURL?page='+str(nextPage)
             yield Request(absolute_next_page_url, self.parse)
 
     def parse(self, response):
